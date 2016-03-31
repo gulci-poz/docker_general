@@ -1,0 +1,43 @@
+docker run hello-world
+# -d w tle
+# -P eksponuje na porcie
+docker run -d -P seqvence/static-site
+docker ps
+
+sudo su
+cd
+service docker.io status
+uname -a
+apt-get update
+apt-get install -y docker.io
+# us³uga ma nazwê docker, a nie docker.io, pid siê zgadza
+service docker status
+service --status-all
+docker -v
+docker version
+docker info
+# Advanced Unification File System - wczeœniej Another Union File System (w CentOS jest inny storage driver)
+# native - u¿ywamy libcontainer - dostêp do kernela przez dokera
+# backup przed updatem
+wget -qO- https://get.docker.com/gpg | apt-key add -
+echo deb http://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+apt-get update
+apt-get install lxc-docker
+docker version
+docker info
+# ca³y czas mamy native
+# deamon nas³uchuje na sokecie /run/docker.sock (root, grupa docker)
+# docker potrzebuje uprawnieñ root
+# mo¿na dodaæ u¿ytkownika do grupy docker, ale trzeba regularnie audytowaæ tê grupê
+exit
+# -it interactive + tty
+# obraz ubuntu i proces bash
+docker run -it ubuntu /bin/bash
+# permission denied; u mnie nie pokazuje deamona dokera
+cat /etc/group
+sudo gpasswd -a gulci docker
+logout
+# trzeba siê wylogowaæ, grupy s¹ cachowane przy logowaniu
+docker run -it ubuntu /bin/bash
+# jesteœmy w konsoli kontenera, mo¿emy wyjœæ exit, to równie¿ wy³¹cza kontener
+exit

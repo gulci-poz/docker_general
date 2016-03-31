@@ -1,0 +1,31 @@
+docker
+	pluralsight - Poulton
+	pluralsight - wahlin
+	book - using docker
+	pluralsight - Cloud Oriented Programming
+	ms win server 2016 - docker
+
+linux
+	vbox + vagrant + coreos + containers
+	coreos, ubuntu snappy, atomic, rancher, ms nano, photon
+	ubuntu + pultoun pluralsight
+
+cloud
+	amazon + azure
+	amazon + azure -> pluralsight
+	amazon docker yt
+	microsoft docker yt
+
+go
+	pluralsight - Poulton
+	pluralsight - inne
+	kurs - inet
+	Todd McLeod - lang + web + editors
+	microservices
+	microservices php, python, nodejs
+
+kubernetes
+
+web apps on docker
+
+.net on docker
