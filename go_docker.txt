@@ -20,9 +20,10 @@ go
 	pluralsight - Poulton
 	pluralsight - inne
 	kurs - inet
-	Todd McLeod - lang + web + editors
+	Todd McLeod - lang + web + editors; Lynda
 	microservices
-	microservices php, python, nodejs
+	~ microservices php, python, nodejs
+	books - kernighan; ew. oreilly, manning
 
 kubernetes
 
