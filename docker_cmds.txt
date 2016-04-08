@@ -38,3 +38,6 @@ docker info
 docker run -it ubuntu /bin/bash
 # jesteśmy w konsoli kontenera, możemy wyjść exit, to również wyłącza kontener
 exit
+
+docker run --name msqltest -e MY_SQL_ROOT_PASSWORD=secret_pswd -d mysql
+docker run --name wptest --link msqltest:mysql -d wordpress
