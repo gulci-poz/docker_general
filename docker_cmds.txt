@@ -1,4 +1,26 @@
-docker run hello-world
+https://docs.docker.com/engine/installation/linux/fedora/
+# minimum kernel 3.10
+uname -r
+sudo dnf update
+
+sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/fedora/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+sudo dnf install docker-engine
+sudo systemctl start docker
+sudo docker run hello-world
+
+sudo usermod -aG docker your_username
+
+# start daemona z sytemem
+sudo systemctl enable docker
+
 # -d w tle
 # -P eksponuje na porcie
 docker run -d -P seqvence/static-site
