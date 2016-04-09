@@ -1,0 +1,11 @@
+tar -C /usr/local -xzf go1.6.linux-amd64.tar.gz
+
+# system: do pliku /etc/profile
+# użytkownik: do pliku .bash_profile
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/projects/go_projects/src
+
+# w przypadku niestandardowej lokalcji trzeba zdefiniować zmienną GOROOT
+
+# dla użytkownika trzeba ręcznie przeładować .bash_profile
+source ~/.bash_profile
