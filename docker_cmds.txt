@@ -40,4 +40,7 @@ docker run -it ubuntu /bin/bash
 exit
 
 docker run --name msqltest -e MY_SQL_ROOT_PASSWORD=secret_pswd -d mysql
-docker run --name wptest --link msqltest:mysql -d wordpress
+docker run --name wptest --link msqltest:mysql -p 8080:80 -d wordpress
+
+# w razie problemu z konenerami (np. brak listowania za pomocą docker ps) trzeba je usunąć ręcznie z systemu przy wyłączonej usłudze docker
+sudo rm -rf /var/lib/docker/containers/*
