@@ -28,19 +28,31 @@ sudo docker run hello-world
 # -P eksponuje na porcie
 docker run -d -P seqvence/static-site
 
-# pokazuje działające w tle kontenery
+# pokazuje działające kontenery
 docker ps
+# pokazuje wszystkie kontenery
+docker ps -a
+# formatowanie z szablonem Go; dzięki table mamy nagłówek
+docker ps -a --format "table {{.ID}}\t{{.Ports}}\t{{.Names}}"
+
+# dokładna pomoc do komendy
+docker COMMAND --help
 
 docker version
 docker info
 
+docker start id_kontenera
+
 # ubuntu w trybie interaktywnym z konsolą
-docker run -it ubuntu /bin/bash
+docker run -it ubuntu bash
 # jesteśmy w konsoli kontenera, możemy wyjść exit, to również wyłącza kontener
 exit
 
-docker run --name msqltest -e MY_SQL_ROOT_PASSWORD=secret_pswd -d mysql
+docker run --name msqlserver -e MYSQL_ROOT_PASSWORD=secret-pswd -d mysql/mysql-server
 docker run --name wptest --link msqltest:mysql -p 8080:80 -d wordpress
 
-# w razie problemu z konenerami (np. brak listowania za pomocą docker ps) trzeba je usunąć ręcznie z systemu przy wyłączonej usłudze docker
+# usunięcie kontenera, ale nie obrazu
+docker rm id_kontenera
+
+# można ręcznie usunąć kontener, przy wyłączonej usłudze docker
 sudo rm -rf /var/lib/docker/containers/*
