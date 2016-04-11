@@ -1,1 +1,5 @@
-sudo tar -C /usr/local/apps -xzf ideaIC-2016.1.1.tar.gz
+sudo tar -C /usr/local/apps -xzf file_to_extract.tar.gz
+sudo unzip file_to_extract.zip -d directory_to_extract
+
+sudo ln -s /usr/local/apps/VSCode-linux-x64/code /usr/local/bin/vscode
+unlink /usr/local/apps/VSCode-linux-x64/code
