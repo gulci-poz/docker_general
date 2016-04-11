@@ -1,0 +1,22 @@
+bookmarks: dom - oba systemy i wszystkie pliki bookmarks_*.html (3x docker)
+
+Melawika
+(LOGO 8)
+OSIEM: kontenerowiec (ops), portowiec (dev)
+O-SIEM
+O_SIEM
+8SIEM
+8-SIEM
+8_SIEM
+
+kontenery na Google Cloud, AWS i Azure - przetestować
+aplikacje i strony - GAE, AWS i Azure - przetestować
+
+GAE - py, go - pod kątem własnych aplikacji
+aplikacje node.js i .net core na chmurze
+wp, django - w kontenerze lub jako PaaS - pod kątem blogów
+inny web framework na chmurze
+
+stx next
+allegro
+golden line

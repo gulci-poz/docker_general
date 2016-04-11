@@ -1,32 +1,42 @@
+8 - ósmy spis
+
 docker
-	pluralsight - Poulton
-	pluralsight - wahlin
+	pluralsight - Poulton, pozostałe
+	pluralsight - wahlin, docker for developers
 	book - using docker
+	book - up and running
+	inet - yt tutorial + docker docs + docker tutorial
 	pluralsight - Cloud Oriented Programming
 	ms win server 2016 - docker
 
 linux
-	vbox + vagrant + coreos + containers
-	coreos, ubuntu snappy, atomic, rancher, ms nano, photon
-	ubuntu + pultoun pluralsight
+	CoreOS - przetestować, może przez Vagrant
+	pluralsight - solidnie
 
 cloud
-	amazon + azure
-	amazon + azure -> pluralsight
-	amazon docker yt
-	microsoft docker yt
+	book - amazon
+	pluralsight - amazon, azure
 
 go
 	pluralsight - Poulton
 	pluralsight - inne
-	kurs - inet
-	Todd McLeod - lang + web + editors; Lynda
-	microservices
-	~ microservices php, python, nodejs
-	books - kernighan; ew. oreilly, manning
+	book - kernighan
+	book - go in action
+	book - web dev wiht go
+	ew. Todd McLeod
 
-kubernetes
+microservices
+	book - building microservices
+	pluralsight - kurs poglądowy
 
-web apps on docker
+microsoft
+	pluralsight - .net core
 
-.net on docker
+web
+	pluralsight - angular and firebase
+	pluralsight - react Alicea
+
+agile (pluralsight)
+
+python
+	book - tdd percival
