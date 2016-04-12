@@ -1,4 +1,4 @@
-bookmarks: dom - oba systemy i wszystkie pliki bookmarks_*.html (3x docker)
+bookmarks - Karolcia
 
 Melawika
 (LOGO 8)
