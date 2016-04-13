@@ -20,11 +20,15 @@ http://www.if-not-true-then-false.com/2010/install-virtualbox-guest-additions-on
 
 # instalacja CoreOS z poziomu CentOS LiveGnome
 https://www.youtube.com/watch?v=vy6hWsOuCh8
-coreos_install.sh
+# kod skryptu z github projektu
+-> coreos_install.sh
+chmod +x coreos_install.sh
 # klucz generujemy na fizycznej maszynie
 ssh-keygen -t rsa -b 2048
-scp [user]@[IP]:/tmp/Core* .
-cloud-config.yaml
+# w Sharing musimy mieć włączony Remote Login
+# użytkownik musi mieć nadane hasło
+scp [user]@[IP]:[pub_key_path_and_name] .
+-> cloud-config.yaml
 
 ==========
 
@@ -47,4 +51,4 @@ coreos:
 # wykonujemy skrypt coreos_install.sh
 sudo ./coreos_install.sh -d /dev/sda -C stable -c cloud-config.yaml
 
-ssh -i /tmp/[private_key] core@[IP]
+ssh -i [private_key_path_and_name] core@[IP]
