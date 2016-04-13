@@ -8,6 +8,7 @@ docker
 	inet - yt tutorial + docker docs + docker tutorial
 	pluralsight - Cloud Oriented Programming
 	ms win server 2016 - docker
+	unikernel
 
 linux
 	CoreOS - przetestować, może przez Vagrant
