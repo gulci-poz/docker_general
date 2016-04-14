@@ -75,5 +75,3 @@ export DOCKER_HOST="tcp://192.168.56.50:2375"
 export DOCKER_HOST=
 # można również skonfigurować demona do nasłuchiwania na porcie sieciowym i lokalnym sokecie
 docker -H 192.168.56.50:2375 -H unix:///var/run/docker.sock -d &
-
-# jeszcze raz instalacja na Ubuntu i konfiguracja całego środowiska

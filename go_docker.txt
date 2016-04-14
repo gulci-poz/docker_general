@@ -41,3 +41,4 @@ agile (pluralsight)
 
 python
 	book - tdd percival
+	book - intro i dj

@@ -1,0 +1,57 @@
+# w maszynie ubuntus (centos również) dodajemy sieciówkę Host-only Adapter, oprócz NAT
+# jeśli nie ma takiej na liście, to musimy ją stworzyć w vbox
+# File -> Preferences -> Network, dodajemy w zakładce Host-only Networks
+# instalujemy też serwer SSH (ubuntus, w trakcie instalacji systemu)
+
+# domyślnie ta druga sieć nie jest włączona
+
+# w CentoOS możemy włączyć ręcznie przez GUI lub:
+# w pliku /etc/sysconfig/network-scripts/ifcfg-enp0s8 domyślnie mamy ONBOOT=no, zapisujemy ONBOOT=yes
+# restart systemu
+# teraz możemy włączać/wyłączać kartę za pomocą
+ifconfig enp0s8 up
+ifconfig enp0s8 down
+
+# w ubuntus edytujemy plik /etc/network/interfaces
+sudoedit /etc/network/interfaces
+# dodajemy wpis
+
+# Host only
+auto eth1
+iface eth1 inet dhcp
+
+# F2 - wyjście z edycji, zapisujemy jako /etc/network/interfaces (nie jako sugerowany tymczasowy plik)
+# restart systemu
+
+# wyświetlenie IP
+/sbin/ifconfig -a
+# lub po prostu
+ifconfig -a
+# alt + tab - pokazuje ostatnie komendy
+# paging
+[komenda] | more
+# natychmiastowy shutdown z poweroff
+sudo shutdown -hP now
+
+# jeśli chcemy połączyć się przez SSH z maszyną z NAT, musimy zrobić forward portu w konfiguracji NIC z NAT w maszynie; w części Advanced wybieramy przycisk Port Forwarding
+# dodajemy nową regułę
+Host IP: 127.0.0.1
+Host Port: 2222
+Guest IP: 10.0.2.15
+Guest Port: 22
+# łączymy się za pomocą SSH
+ssh -p 2222 [user]@127.0.0.1
+# jeśli mamy inny system przez NAT, to robimy forwarding na inny port, np. 2223
+# jeśli mamy zainstalowany Extension Pack w vbox, to możemy korzystać z Headless Start
+# jest jeszcze opcja Detachable Start, maszyna i jej GUI są uruchamiane w osobnych procesach, można zamknąć okno z GUI, a sama maszyna będzie nadal działała, można się wtedy podłączyć za pomocą SSH
+
+# połączenie przez VPN
+# jeśli mam maszyny z NAT, to najpierw łączę się do fedory i potem na odpowiednim porcie do danej maszyny (wszędzie musi być forwarding)
+# w konfiguracji połączenia VPN dla IPv4 i IPv6 wybieram opcję Use this connection only for resources on its network; dzięki temu ruch internetowy nie będzie szedł przez VPN
+
+# czas na dokera
+
+sudo su
+# sprawdzenie czy działa usługa (demon) dokera; docker to inny pakiet w ubuntu, potrzebujemy docker.io
+service docker.io status
+# 2:45

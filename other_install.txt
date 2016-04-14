@@ -52,3 +52,36 @@ coreos:
 sudo ./coreos_install.sh -d /dev/sda -C stable -c cloud-config.yaml
 
 ssh -i [private_key_path_and_name] core@[IP]
+
+# nie można się zalogować do CoreOS, również przez SSH
+
+# instalacja z użyciem iso
+https://www.youtube.com/watch?v=yiWa0KFJDfI
+sudo openssl passwd -1 > cloud-config-file
+cat cloud-config-file
+vi cloud-config-file
+# i - insert mode
+
+#cloud-config
+
+ users:
+  - name: gulci
+    passwd: [generated]
+    groups:
+     - sudo
+     - docker
+
+# :wq - zapis i wyjście
+
+sudo coreos-install -d /dev/sda -C stable -c cloud-config-file
+# restart maszyny i logujemy się do systemu zainstalowanego na dysku
+
+# żeby połączyć się z innej maszyny trzeba wyłączyć sprawdzanie klucza hosta
+# nie działa za pomocą fleetctl --strict-host-key-checking=false
+# dodajemy do ~/.bash_profile zmienną środowiskową z przedrostkiem FLEETCTL
+# najpierw trzeba usunąć link .bash_profile i stworzyć nowy plik .bash_profile
+# tam dodajemy
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+export FLEETCTL_STRICT_HOST_KEY_CHECKING=false
+
+# nie działa, dopisać klucz do known_hosts
