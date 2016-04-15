@@ -54,4 +54,85 @@ ssh -p 2222 [user]@127.0.0.1
 sudo su
 # sprawdzenie czy działa usługa (demon) dokera; docker to inny pakiet w ubuntu, potrzebujemy docker.io
 service docker.io status
-# 2:45
+uname -r
+uname -a
+# ściągamy aktualne listy pakietów dla ropozytoriów
+apt-get update
+# update samych pakietów robimy za pomocą
+apt-get upgrade
+# -y assume yes
+apt-get install -y docker.io
+# pakiet jest docker.io ale usługa jest docker
+service docker status
+docker -v
+docker version
+docker info
+# storage driver w ubuntu to aufs (dawniej Another Union File System, teraz Advanced Unification File System)
+# aufs to domyślny union (layered) mount system dla kontenerów dokera w ubuntu
+# (union mounting is a way of combining multiple directories into one that appears to contain their combined contents)
+# w CentOS jest to inny sterownik
+# execution driver to native, z libcontainer (nie z lxc)
+# w produkcji: backup przed updatem, np. obrazy i kontenery
+# musimy dodać klucz repo dokera do lokalnego łańcucha apt-key
+wget -qO- https://get.docker.com/gpg | apt-key add -
+# dodajemy repo dokera do apt sources
+echo deb http://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+# synchronizacja z nowym repo
+apt-get update
+# w tym repo jest inna nazwa pakietu
+apt-get install lxc-docker
+# cały czas mamy native z libcontainer jako execution driver (lxc w nazwie jest mylące)
+# docker wymaga uprawnień root
+# domyślnie docker nasłuchuje na lokalnym unixowym sokecie /var/run/docker.sock
+# /var/run to link do /run
+ls /run -lah
+# docker.sock jest ukryty; flaga s na początku - socket, właściciel root, ale mamy group owner docker
+# grupa docker istnieje
+ls /etc/group
+sudo gpasswd -a gulci docker
+# jesteśmy w grupie docker
+# et-sy ;)
+ls /etc/group
+# przynależność do grupy cachuje się w czasie logowania
+# interactive + assign tty (ładujemy proces bash w kontenerze)
+docker run -it ubuntu /bin/bash
+# jesteśmy w linii komend kontenera, wystarczy dać exit
+
+# standardowo docker nasłuchuje na lokalnym sokecie unixowym
+# upewniamy się, że docker nie nasłuchuje na tcp (TCP Listening Program)
+(sudo) netstat -tlp
+# zamykamy usługę dockera
+sudo service docker stop
+(sudo systemctl stop docker)
+# ustawiamy nasłuchiwanie na TCP/IP (danej maszyny)
+# 2375 to standardowy non-SSL port dla dockera
+# -d daemon mode
+# & powrót do linii komend
+# w wersji 1.9.1 -d jest deprecated
+docker -H 192.168.56.102:2375 -d &
+# teraz mamy podkomendę daemon
+# musimy dać sudo, bo inaczej nie mamy dostępu do docker.pid
+# mamy WARN o ustawieniu -tlsverify przy bindowaniu do IP
+# mamy WARN, że jądro nie obsługuje swap memory limit (4.2.0-27-generic)
+sudo docker daemon -H 192.168.56.102:2375 &
+# nie mamy usługi na lokalnym sokecie
+service docker status
+# ale mamy na TCP
+netstat -tlp
+# na innym systemie host dockera ustawiamy zdalny, a nie lokalny przez socket
+export DOCKER_HOST="tcp://192.168.56.102:2375"
+# teraz docker łączy się z demonem pierwszego kompa
+docker info (na CentOS)
+# dostaniemy w konsoli ubuntus log, że było zapytanie GET do dockera o info
+# potencjalnie umożliwiamy każdemu połączenie się z demonem
+# firewall może przeszkadzać w połączeniu
+# możemy wrócić do lokalnego demona
+export DOCKER_HOST=
+# można również skonfigurować demona do nasłuchiwania na porcie sieciowym i lokalnym sokecie
+# docker -H 192.168.56.102:2375 -H unix:///var/run/docker.sock -d &
+sudo docker daemon -H 192.168.56.102:2375 -H unix:///var/run/docker.sock &
+
+# jak wyłączyć nasłuchiwanie na TCP?
+# jak nasłuchuje na TCP, to nie udaje się dołączyć socketu (komenda się powiodła, ale nasłuchuje tylko na TCP, są logi o żądaniach GET, nie ma w spisie działającej usługi, tylko komunikat docker stop/waiting)
+sudo docker daemon -H unix:///var/run/docker.sock &
+# trzeba wyłączyć nasłuchiwanie na TCP i włączyć oba równocześnie (nie da się tego zrobić na włączonym TCP, da komunikat, że na TCP już nasłuchuje)

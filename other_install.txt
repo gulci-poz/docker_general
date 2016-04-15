@@ -76,12 +76,17 @@ vi cloud-config-file
 sudo coreos-install -d /dev/sda -C stable -c cloud-config-file
 # restart maszyny i logujemy się do systemu zainstalowanego na dysku
 
-# żeby połączyć się z innej maszyny trzeba wyłączyć sprawdzanie klucza hosta
-# nie działa za pomocą fleetctl --strict-host-key-checking=false
-# dodajemy do ~/.bash_profile zmienną środowiskową z przedrostkiem FLEETCTL
-# najpierw trzeba usunąć link .bash_profile i stworzyć nowy plik .bash_profile
-# tam dodajemy
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-export FLEETCTL_STRICT_HOST_KEY_CHECKING=false
+ssh -p 2224 gulci@127.0.0.1
+# połączenie SSH, sprawdzanie klucza hosta
+http://unix.stackexchange.com/questions/42643/ssh-key-based-authentication-known-hosts-vs-authorized-keys
+# w skrócie: klient powienien mieć w ~/.ssh/known_hosts klucz publiczny serwera (komputera), z którym się łączy; z kolei serwer w ~/.ssh/authorized_keys powinien mieć klucz publiczny klienta; można użyć kluczy ecdsa
+# alternatywnie (w produkcji tego nie robimy): na kliencie można stworzyć plik ~/.ssh/config
 
-# nie działa, dopisać klucz do known_hosts
+Host 127.0.0.1
+	Port 2224
+	StrictHostKeyChecking no
+	UserKnownHostsFile=/dev/null
+	LogLevel=quiet
+
+# trzeba też zmienić uprawnienia do tego pliku
+chmod 600 ~/.ssh/config

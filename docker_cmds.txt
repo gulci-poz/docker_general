@@ -57,21 +57,12 @@ docker rm id_kontenera
 # można ręcznie usunąć kontener, przy wyłączonej usłudze docker
 sudo rm -rf /var/lib/docker/containers/*
 
-# standardowo docker nasłuchuje na lokalnym sokecie unixowym
-# upewniamy się, że docker nie nasłuchuje na tcp
-(sudo) netstat -tlp
-# zamykamy usługę dockera
-sudo systemctl stop docker
-# ustawiamy nasłuchiwanie na TCP/IP (danej maszyny)
-# 2375 to standardowy non-SSL port dla dockera
-# -d daemon mode
-# & powrót do linii komend
-docker -H 192.168.56.50:2375 -d &
-# na innym systemie host dockera ustawiamy zdalny, a nie lokalny przez socket
-export DOCKER_HOST="tcp://192.168.56.50:2375"
-# teraz docker łączy się z demonem pierwszego kompa
-# potencjalnie umożliwiamy każdemu połączenie się z demonem
-# możemy wrócić do lokalnego demona
-export DOCKER_HOST=
-# można również skonfigurować demona do nasłuchiwania na porcie sieciowym i lokalnym sokecie
-docker -H 192.168.56.50:2375 -H unix:///var/run/docker.sock -d &
+# CentOS
+sudo yum install -y docker
+systemctl status docker.service
+sudo systemctl start docker.service
+systemctl status docker.service
+docker info
+# storage driver w CentOS to devicemapper; AUFS nie jest (i nie będzie) w głównej gałęzi jądra - Red Hat korzysta tylko z tej gałęzi
+# AUFS ma problemy z wydajnością, również w związku z dokerem
+# execution driver to native z libcontainer
