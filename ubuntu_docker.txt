@@ -119,6 +119,7 @@ sudo docker daemon -H 192.168.56.102:2375 &
 service docker status
 # ale mamy na TCP
 netstat -tlp
+# możemy nasłuchiwać równocześnie na sokecie, ale musielibyśmy z powrotem włączyć usługę
 # na innym systemie host dockera ustawiamy zdalny, a nie lokalny przez socket
 export DOCKER_HOST="tcp://192.168.56.102:2375"
 # teraz docker łączy się z demonem pierwszego kompa
@@ -131,8 +132,16 @@ export DOCKER_HOST=
 # można również skonfigurować demona do nasłuchiwania na porcie sieciowym i lokalnym sokecie
 # docker -H 192.168.56.102:2375 -H unix:///var/run/docker.sock -d &
 sudo docker daemon -H 192.168.56.102:2375 -H unix:///var/run/docker.sock &
+# komenda nie zadziała, jeśli już mamy włączone nasłuchiwanie na TCP
 
-# jak wyłączyć nasłuchiwanie na TCP?
-# jak nasłuchuje na TCP, to nie udaje się dołączyć socketu (komenda się powiodła, ale nasłuchuje tylko na TCP, są logi o żądaniach GET, nie ma w spisie działającej usługi, tylko komunikat docker stop/waiting)
+# samo włączenie nasłuchiwania na sokecie nie powoduje zaprzestania nasłuchiwania na TCP
 sudo docker daemon -H unix:///var/run/docker.sock &
-# trzeba wyłączyć nasłuchiwanie na TCP i włączyć oba równocześnie (nie da się tego zrobić na włączonym TCP, da komunikat, że na TCP już nasłuchuje)
+# tego nie musimy robić, nasłuchiwanie na sockecie można w każdej chwili włączyć - włączając usługę
+# informujemy dokera, że chcemy nasłuchiwać na lokalnym sokecie, usługa nie jest jeszcze włączona
+sudo service docker start
+
+# wyłączanie nasłuchiwania na TCP
+sudo fuser 2375/tcp
+# pokazuje wszystkie procesy (PID) nasłuchujące na 2375
+sudo fuser 2375/tcp -k
+# zabicie szukanego procesu
